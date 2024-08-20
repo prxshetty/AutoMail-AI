@@ -60,3 +60,18 @@ class EmailFetcher:
         mail.logout()
 
         return new_emails
+    
+    def send_emails(self, recipient, subject, body):
+        msg = MIMEMultipart()
+        msg["From"] = self.user
+        msg["To"] = recipient
+        msg["Subject"] = subject
+
+        msg.attach(MIMEText(body, "plain"))
+
+        server = smtplib.SMTP(self.smtp_server, 587)
+        server.starttls()
+        server.login(self.user, self.password)
+        text = msg.as_string()
+        server.sendmail(self.user, recipient, text)
+        server.quit()
