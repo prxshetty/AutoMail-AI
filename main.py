@@ -1,9 +1,11 @@
 from extraction import EmailFetcher
 from support import AICustomerSupport
 from dotenv import load_dotenv
+import os
 import asyncio
-
-
+load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path=dotenv_path)
 
 async def fetch_and_process_emails(fetcher, ai_support):
     while True:

@@ -1,7 +1,7 @@
 from langchain.schema import Document
-from langchain.document_transformers import DoctranPropertyExtractor #used to extract correct propertyes of emial issue
+from langchain_community.document_transformers import DoctranPropertyExtractor #used to extract correct propertyes of emial issue
 from langchain.chains import LLMChain
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 
 
@@ -74,3 +74,5 @@ class AICustomerSupport:
         extracted_properties = extracted_document[0].metadata["extracted_properties"]
         evaluation_result = self.interpret_and_evaluate(extracted_properties)
         return extracted_properties, evaluation_result
+    
+

@@ -8,6 +8,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import yaml
+from dotenv import load_dotenv
+load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 
 class EmailFetcher:
     def __init__(self) -> None:
@@ -29,7 +32,7 @@ class EmailFetcher:
     async def fetch_new_emails(self):
         loop= asyncio.get_event_loop()
         with concurrent.futures.ThreadPoolExecutor() as pool:
-            new_emails = await loop.run_in_executor(pool, self.fetch_new_emails)
+            new_emails = await loop.run_in_executor(pool, self._fetch_new_emails)
         return new_emails
     
     def _fetch_new_emails(self):
