@@ -2,7 +2,7 @@ from langchain.schema import Document
 from langchain_community.document_transformers import DoctranPropertyExtractor #used to extract correct propertyes of emial issue
 from langchain.chains import LLMChain
 from langchain_community.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 
 
 class AICustomerSupport:
@@ -32,24 +32,27 @@ class AICustomerSupport:
                 "description": "A brief explaination of the problem encountered with the product.",
                 "type": "string",
                 "required": True
+            },
+            {
+    ## add name logic here 
             }
         ]
 
     def interpret_and_evaluate(self, extracted_properties):
         template = f"""
-        You are an AI Customer Support that writes friendly emails back to customers. Address the suer wth his or her issue kindly and while addressing
+        You are an AI Customer Support that writes friendly emails back to customers. Address the sender with his or her issue kindly and while addressing
         say 'Dear Customer'.
-        The customer's emalil was categorized as {extracted_properties['category']}, and mentioned the product {extracted_properties['mentioned_product']}. 
+        The customer's email was categorized as {extracted_properties['category']}, and mentioned the product {extracted_properties['mentioned_product']}. 
         They described the issue: {extracted_properties['issue_description']}.
-        Please reply to this email in a friendly and helpful manner.set
+        Please reply to this email in a friendly and helpful manner.
         
-        Write a response that includes an understanding of the problem, a proposed solution, and a polite sign-off and conclusion of the email.
+        Write a response that includes an understanding of the problem, a proposed solution, and a polite sign-off with senders name and conclusion of the email.
         Your sign-off name in the email is Auto-Mail AI.
         """
 
         llm = ChatOpenAI(temperature = 0)
-        PromptTemplate = PromptTemplate.from_template(template=template)
-        chain = LLMChain(llm = llm, prompt = PromptTemplate)
+        prompt_template = PromptTemplate.from_template(template=template)
+        chain = LLMChain(llm = llm, prompt = prompt_template)
         result = chain.predict(input = "")
         return result
     

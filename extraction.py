@@ -50,8 +50,8 @@ class EmailFetcher:
         new_emails = []
         for email_id in email_ids:
             response, email_data = mail.uid("fetch", email_id, "(BODY[])")
-            if response!= 'OK':
-                print(f"Failed to fetch email iwht ID {email_id}")
+            if response!= "OK":
+                print(f"Failed to fetch email with ID {email_id}.")
                 continue
             raw_email = email_data[0][1]
             email_message = email.message_from_bytes(raw_email)
@@ -64,7 +64,7 @@ class EmailFetcher:
 
         return new_emails
     
-    def send_emails(self, recipient, subject, body):
+    def send_email(self, recipient, subject, body):
         msg = MIMEMultipart()
         msg["From"] = self.user
         msg["To"] = recipient
