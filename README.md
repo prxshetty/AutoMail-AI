@@ -1,2 +1,3 @@
 # AutoMail-AI
-Uses LangChain and DocTran for AI Services.
+Uses LangChain and DocTran for Email AI Services.
+
