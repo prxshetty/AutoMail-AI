@@ -3,6 +3,9 @@ from support import AICustomerSupport
 from dotenv import load_dotenv
 import os
 import asyncio
+import warnings
+warnings.warn = lambda *args,**kwargs: None # removes the version deprecated errors
+
 load_dotenv()
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path=dotenv_path)

@@ -26,6 +26,7 @@ class AICustomerSupport:
                 "name": "mentioned_product",
                 "description": "The prodcut mentioned in this email.",
                 "type": "string",
+                "required": True
             },
             {
                 "name": "issue_description",
@@ -34,13 +35,16 @@ class AICustomerSupport:
                 "required": True
             },
             {
-    ## add name logic here 
+                "name": "customer_name",
+                "description": " Name of the Customer",
+                "type": "string",
+                "required" : True
             }
         ]
 
     def interpret_and_evaluate(self, extracted_properties):
         template = f"""
-        You are an AI Customer Support that writes friendly emails back to customers. Address the sender with his or her issue kindly and while addressing
+        You are an AI Customer Support that writes friendly emails back to customers. Address the sender with his or her name {extracted_properties['customer_name']} issue kindly and while addressing
         say 'Dear Customer'.
         The customer's email was categorized as {extracted_properties['category']}, and mentioned the product {extracted_properties['mentioned_product']}. 
         They described the issue: {extracted_properties['issue_description']}.
@@ -50,7 +54,7 @@ class AICustomerSupport:
         Your sign-off name in the email is Auto-Mail AI.
         """
 
-        llm = ChatOpenAI(temperature = 0)
+        llm = ChatOpenAI(model="gpt-3.5-turbo", temperature = 0)
         prompt_template = PromptTemplate.from_template(template=template)
         chain = LLMChain(llm = llm, prompt = prompt_template)
         result = chain.predict(input = "")
